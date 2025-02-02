@@ -1,18 +1,15 @@
-package guru.springframework.msscbrewery.services;
+package guru.springframework.msscbrewery.services.v2;
 
 import guru.springframework.msscbrewery.web.model.BeerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
 import java.util.UUID;
 
-/**
- * Created by jt on 2019-04-20.
- */
 @Service
 @Slf4j
-public class BeerServiceImpl implements BeerService {
+public class BeerServiceV2Impl implements BeerServiceV2{
+
     @Override
     public BeerDto getBeerById(UUID beerId) {
         return BeerDto.builder().id(UUID.randomUUID())
@@ -37,8 +34,7 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void deleteById(UUID beerId) {
-     log.info("Delete called");
+        log.info("Delete called");
     }
-
 
 }
