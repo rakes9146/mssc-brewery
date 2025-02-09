@@ -3,6 +3,10 @@ package guru.springframework.msscbrewery.web.controller.v2;
 import guru.springframework.msscbrewery.services.BeerService;
 import guru.springframework.msscbrewery.services.v2.BeerServiceV2;
 import guru.springframework.msscbrewery.web.model.BeerDto;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +23,13 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-04-20.
  */
+@RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/v2/beer")
 @RestController
 public class BeerControllerV2 {
 
     private final BeerServiceV2 beerServiceV2;
-
-    public BeerControllerV2(BeerServiceV2 beerServiceV2)
-    {
-        this.beerServiceV2 = beerServiceV2;
-    }
 
     @GetMapping({"/{beerId}"})
     public ResponseEntity<BeerDto> getBeer(@NotNull  @PathVariable("beerId") UUID beerId){
@@ -39,8 +40,9 @@ public class BeerControllerV2 {
     @PostMapping  //create new post mapping
     public ResponseEntity handlePost(@Valid @RequestBody  BeerDto beerDto){
 
-        BeerDto savedDt = beerServiceV2.saveNewBeer(beerDto);
-        HttpHeaders httpHeaders = new HttpHeaders();
+        log.debug("Inside the post method");
+        val savedDt = beerServiceV2.saveNewBeer(beerDto);
+        var httpHeaders = new HttpHeaders();
         //to do add host name url
         httpHeaders.add("Location", "/api/v1/beer/"+savedDt.getId().toString());
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
